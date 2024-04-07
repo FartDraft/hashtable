@@ -1,6 +1,5 @@
 #pragma once
 
-#include <stdbool.h>
 #include <stdlib.h>
 
 #define HT_MINIMUN_CAPACITY 32
@@ -201,4 +200,42 @@ enum ht_status_t { HT_FAILURE, HT_SUCCESS, HT_SHOULD_GROW, HT_INSERTED, HT_UPDAT
         table->size = 0;                                                                                               \
                                                                                                                        \
         return HT_SUCCESS;                                                                                             \
+    }                                                                                                                  \
+                                                                                                                       \
+    typedef struct {                                                                                                   \
+        hashtable_##key_t##_##value_t##_t* _table;                                                                     \
+        size_t _index;                                                                                                 \
+    } hashtable_it_##key_t##_##value_t##_t;                                                                            \
+                                                                                                                       \
+    hashtable_it_##key_t##_##value_t##_t* ht_create_iterator_##key_t##_##value_t(                                      \
+        hashtable_##key_t##_##value_t##_t* table) {                                                                    \
+        hashtable_it_##key_t##_##value_t##_t* it = malloc(sizeof(hashtable_it_##key_t##_##value_t##_t));               \
+        if (it == NULL) {                                                                                              \
+            return NULL;                                                                                               \
+        }                                                                                                              \
+        it->_table = table;                                                                                            \
+        it->_index = 0;                                                                                                \
+                                                                                                                       \
+        return it;                                                                                                     \
+    }                                                                                                                  \
+                                                                                                                       \
+    void ht_destroy_iterator_##key_t##_##value_t(hashtable_it_##key_t##_##value_t##_t* it) {                           \
+        it->_index = it->_table->capacity;                                                                             \
+        it->_table = NULL;                                                                                             \
+        free(it);                                                                                                      \
+    }                                                                                                                  \
+                                                                                                                       \
+    int ht_next_##key_t##_##value_t(hashtable_it_##key_t##_##value_t##_t* it, key_t* key, value_t* value) {            \
+        for (; it->_index < it->_table->capacity; ++it->_index) {                                                      \
+            if (memcmp(it->_table->items + it->_index, it->_table->_null_item, sizeof(*it->_table->items)) != 0        \
+                && memcmp(it->_table->items + it->_index, it->_table->_tombstone_item, sizeof(*it->_table->items))     \
+                       != 0) {                                                                                         \
+                memcpy(key, &it->_table->items[it->_index].key, sizeof(it->_table->items->key));                       \
+                memcpy(value, &it->_table->items[it->_index].value, sizeof(it->_table->items->value));                 \
+                ++it->_index;                                                                                          \
+                return HT_FOUND;                                                                                       \
+            }                                                                                                          \
+        }                                                                                                              \
+                                                                                                                       \
+        return HT_NOT_FOUND;                                                                                           \
     }

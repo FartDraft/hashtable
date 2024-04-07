@@ -70,16 +70,24 @@ main(void) {
     person_t sample1 = "Isaac Egnew";
     printf("\n%s - %s\n", sample1, *ht_const_lookup_person_t_phone_t(table, &sample1));
     ht_erase_person_t_phone_t(table, &sample1);
-    printf("After erase: %s is %s\n", sample1,
+    printf("Item after erase: %s is %s\n", sample1,
            ht_contains_person_t_phone_t(table, &sample1) == HT_FOUND ? "found" : "not found");
 
     person_t sample2 = "Alaine Doby";
     printf("\n%s - %s\n", sample2, *ht_const_lookup_person_t_phone_t(table, &sample2));
 
+    // person_t iperson;
+    // phone_t iphone;
+    // hashtable_it_person_t_phone_t_t* it = ht_create_iterator_person_t_phone_t(table);
+    // while (ht_next_person_t_phone_t(it, &iperson, &iphone) == HT_FOUND) {
+    //     printf("%s %s\n", iperson, iphone);
+    // }
+
     ht_clear_person_t_phone_t(table);
-    printf("After clear: %zu\n", table->size);
+    printf("Size after clear: %zu\n", table->size);
 
 defer:
+    // ht_destroy_iterator_person_t_phone_t(it);
     fclose(file);
     ht_destroy_person_t_phone_t(table);
     return result;

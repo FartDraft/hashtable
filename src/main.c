@@ -78,16 +78,16 @@ main(void) {
 
     // person_t iperson;
     // phone_t iphone;
-    // hashtable_it_person_t_phone_t_t* it = ht_create_iterator_person_t_phone_t(table);
-    // while (ht_next_person_t_phone_t(it, &iperson, &iphone) == HT_FOUND) {
+    // hashtable_it_person_t_phone_t_t it = {.table = table, .index = 0};
+    // while (ht_next_person_t_phone_t(&it, &iperson, &iphone) == HT_FOUND) {
     //     printf("%s %s\n", iperson, iphone);
     // }
 
+    printf("Size before clear: %zu\n", table->size);
     ht_clear_person_t_phone_t(table);
     printf("Size after clear: %zu\n", table->size);
 
 defer:
-    // ht_destroy_iterator_person_t_phone_t(it);
     fclose(file);
     ht_destroy_person_t_phone_t(table);
     return result;

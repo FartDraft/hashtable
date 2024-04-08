@@ -29,7 +29,7 @@
 `int ht_clear(hashtable* table)` - clears all the key-value pairs from the hash table. Returns `HT_FOUND` and `HT_NOT_FOUND` respectively.
 
 ### Iterator
-`hashtable_it* ht_create_iterator(hashtable* table)`, `void ht_destroy_iterator(hashtable_it* it)` and `int ht_next(hashtable_it* it, key_t* key, value_t* value)` - provide an iterator mechanism for iterating over the key-value pairs in a hash table.
+`int ht_next(hashtable_it* it, key_t* key, value_t* value)` - iterate over the key-value pairs in a hash table. `hashtable_it` needs to be initialized with table and index.
 
 ## Usage
 [The main.c file](src/main.c) shows example usage of the hash table.

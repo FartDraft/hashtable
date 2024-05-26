@@ -12,7 +12,7 @@
 
 typedef char person_t[52];
 typedef char phone_t[12];
-GENERATE_HASHTABLE(person_t, phone_t);
+GENERATE_HASHTABLE(person_t, phone_t)
 
 #define FNV_OFFSET 14695981039346656037UL
 #define FNV_PRIME  1099511628211UL

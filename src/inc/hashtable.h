@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <string.h>
 
 #define HT_MINIMUN_CAPACITY 32
 

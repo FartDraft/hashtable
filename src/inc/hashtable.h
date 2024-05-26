@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _HASHTABLE
+#define _HASHTABLE
 
 #include <stdlib.h>
 #include <string.h>
@@ -223,3 +224,5 @@ enum ht_status_t { HT_FAILURE, HT_SUCCESS, HT_SHOULD_GROW, HT_INSERTED, HT_UPDAT
                                                                                                                        \
         return HT_NOT_FOUND;                                                                                           \
     }
+
+#endif

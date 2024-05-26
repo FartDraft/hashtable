@@ -73,8 +73,8 @@ enum ht_status_t { HT_FAILURE, HT_SUCCESS, HT_SHOULD_GROW, HT_INSERTED, HT_UPDAT
         free(table);                                                                                                   \
     }                                                                                                                  \
                                                                                                                        \
-    int ht_insert_##key_t##_##value_t(hashtable_##key_t##_##value_t##_t* table, const key_t* key,                      \
-                                      const value_t* value) {                                                          \
+    enum ht_status_t ht_insert_##key_t##_##value_t(hashtable_##key_t##_##value_t##_t* table, const key_t* key,         \
+                                                   const value_t* value) {                                             \
         if (table == NULL || table->items == NULL || key == NULL || value == NULL) {                                   \
             return HT_FAILURE;                                                                                         \
         }                                                                                                              \
@@ -147,7 +147,8 @@ enum ht_status_t { HT_FAILURE, HT_SUCCESS, HT_SHOULD_GROW, HT_INSERTED, HT_UPDAT
         return NULL;                                                                                                   \
     }                                                                                                                  \
                                                                                                                        \
-    int ht_contains_##key_t##_##value_t(const hashtable_##key_t##_##value_t##_t* table, const key_t* key) {            \
+    enum ht_status_t ht_contains_##key_t##_##value_t(const hashtable_##key_t##_##value_t##_t* table,                   \
+                                                     const key_t* key) {                                               \
         if (table == NULL || table->items == NULL || key == NULL) {                                                    \
             return HT_FAILURE;                                                                                         \
         }                                                                                                              \
@@ -168,7 +169,7 @@ enum ht_status_t { HT_FAILURE, HT_SUCCESS, HT_SHOULD_GROW, HT_INSERTED, HT_UPDAT
         return HT_NOT_FOUND;                                                                                           \
     }                                                                                                                  \
                                                                                                                        \
-    int ht_erase_##key_t##_##value_t(hashtable_##key_t##_##value_t##_t* table, const key_t* key) {                     \
+    enum ht_status_t ht_erase_##key_t##_##value_t(hashtable_##key_t##_##value_t##_t* table, const key_t* key) {        \
         if (table == NULL || table->items == NULL || key == NULL) {                                                    \
             return HT_FAILURE;                                                                                         \
         }                                                                                                              \
@@ -191,7 +192,7 @@ enum ht_status_t { HT_FAILURE, HT_SUCCESS, HT_SHOULD_GROW, HT_INSERTED, HT_UPDAT
         return HT_NOT_FOUND;                                                                                           \
     }                                                                                                                  \
                                                                                                                        \
-    int ht_clear_##key_t##_##value_t(hashtable_##key_t##_##value_t##_t* table) {                                       \
+    enum ht_status_t ht_clear_##key_t##_##value_t(hashtable_##key_t##_##value_t##_t* table) {                          \
         if (table == NULL || table->items == NULL) {                                                                   \
             return HT_FAILURE;                                                                                         \
         }                                                                                                              \
@@ -207,7 +208,8 @@ enum ht_status_t { HT_FAILURE, HT_SUCCESS, HT_SHOULD_GROW, HT_INSERTED, HT_UPDAT
         size_t index;                                                                                                  \
     } hashtable_it_##key_t##_##value_t##_t;                                                                            \
                                                                                                                        \
-    int ht_next_##key_t##_##value_t(hashtable_it_##key_t##_##value_t##_t* it, key_t* key, value_t* value) {            \
+    enum ht_status_t ht_next_##key_t##_##value_t(hashtable_it_##key_t##_##value_t##_t* it, key_t* key,                 \
+                                                 value_t* value) {                                                     \
         for (; it->index < it->table->capacity; ++it->index) {                                                         \
             if (memcmp(it->table->items + it->index, it->table->_null_item, sizeof(*it->table->items)) != 0            \
                 && memcmp(it->table->items + it->index, it->table->_tombstone_item, sizeof(*it->table->items)) != 0) { \
